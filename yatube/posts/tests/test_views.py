@@ -4,10 +4,9 @@ from django.urls import reverse
 from django.conf import settings
 from django import forms
 from django.core.cache import cache
+from ..models import Post, Group
 cache.clear()
 
-
-from ..models import Post, Group
 
 TEST_OF_POST: int = 13
 User = get_user_model()

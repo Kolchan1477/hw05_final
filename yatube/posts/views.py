@@ -43,7 +43,7 @@ def profile(request, username):
             following = True
         else:
             if Follow.objects.filter(
-                author=author, user=request.user).exists():
+                    author=author, user=request.user).exists():
                 following = True
     context = {
         'author': author,

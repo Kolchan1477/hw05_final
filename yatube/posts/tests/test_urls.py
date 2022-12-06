@@ -2,9 +2,9 @@ from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
 from http import HTTPStatus
 from django.core.cache import cache
+from posts.models import Group, Post
 cache.clear()
 
-from posts.models import Group, Post
 
 User = get_user_model()
 
