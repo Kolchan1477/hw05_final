@@ -38,7 +38,8 @@ def profile(request, username):
     following = False
     follow_yourself = False
     following = request.user.is_authenticated and Follow.objects.filter(
-        user=request.user, author=author).exists()
+        user=request.user, author=author
+    ).exists()
 
     context = {
         'author': author,
@@ -125,7 +126,8 @@ def follow_index(request):
 def profile_follow(request, username):
     author = get_object_or_404(User, username=username)
     user = request.user
-    Follow.objects.get_or_create(user=user, author=author)
+    if user != author:
+        Follow.objects.get_or_create(user=user, author=author)
     return redirect('posts:profile', username=author.username)
 
 
