@@ -37,14 +37,9 @@ def profile(request, username):
     author = get_object_or_404(User, username=username)
     following = False
     follow_yourself = False
-    if request.user in User.objects.all():
-        if author == request.user:
-            follow_yourself = True
-            following = True
-        else:
-            if Follow.objects.filter(
-                    author=author, user=request.user).exists():
-                following = True
+    following = request.user.is_authenticated and Follow.objects.filter(
+        user=request.user, author=author).exists()
+
     context = {
         'author': author,
         'following': following,
@@ -130,9 +125,7 @@ def follow_index(request):
 def profile_follow(request, username):
     author = get_object_or_404(User, username=username)
     user = request.user
-    follower = Follow.objects.filter(user=user, author=author)
-    if user != author and not follower.exists():
-        Follow.objects.create(user=user, author=author)
+    Follow.objects.get_or_create(user=user, author=author)
     return redirect('posts:profile', username=author.username)
 
 

@@ -21,15 +21,15 @@ class PaginatorViewsTest(TestCase):
         self.authorized_client.force_login(self.user)
         self.group = Group.objects.create(title='Тестовая группа',
                                           slug='test_group')
-        bilk_post: list = []
+        posts: list = []
         for i in range(TEST_OF_POST):
-            bilk_post.append(Post(text=f'Тестовый текст {i}',
-                                  group=self.group,
-                                  author=self.user))
-        Post.objects.bulk_create(bilk_post)
+            posts.append(Post(text=f'Тестовый текст {i}',
+                              group=self.group,
+                              author=self.user))
+        Post.objects.bulk_create(posts)
 
     def test_correct_page_context_guest_client(self):
-        '''Проверка количества постов на первой и второй страницах. '''
+        """Проверка количества постов на первой и второй страницах. """
         cache.clear()
         pages: tuple = (reverse('posts:index'),
                         reverse('posts:profile',
